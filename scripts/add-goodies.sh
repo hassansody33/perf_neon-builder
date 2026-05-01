@@ -110,8 +110,10 @@ case "$BBG_SELECTOR" in
         curl -LSs --fail --retry 3 "$BBG_SETUP_URI" | bash &> /dev/null || { echo "Fatal: BBG setup script failed to download/run!"; exit 1; }
         # Enable the necessary Baseband Guard configs
         echo "CONFIG_BBG=y" >> $MAIN_DEFCONFIG
+        # Check if kernel have DEFINE_LSM
+        DEFINE_LSM_CHECK=$(grep -q "#define DEFINE_LSM(lsm)" "${PWD}/include/linux/lsm_hooks.h" && echo "true")
         # Kernel Settings for Baseband Guard
-        if [[ "$KERNEL_VERSION" == "4.19" ]] || [[ "$KERNEL_VERSION" == "5.4" ]]; then
+        if [[ "$DEFINE_LSM_CHECK" == "true" ]]; then
             LSM_FALLBACK='CONFIG_LSM="lockdown,yama,loadpin,safesetid,integrity,selinux,smack,tomoyo,apparmor,bpf,baseband_guard"'
             if grep -q "CONFIG_LSM=" "$MAIN_DEFCONFIG"; then
                 sed -i '/CONFIG_LSM=/s/"$/ ,baseband_guard"/' "$MAIN_DEFCONFIG"
