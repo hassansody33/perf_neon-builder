@@ -11,16 +11,6 @@ TC_URLS=(
     "gcc64|https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git"
     "gcc32|https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git"
 )
-for tc in "${TC_URLS[@]}"; do
-    dir="${tc%%|*}"; url="${tc##*|}"
-    if [ ! -d "$dir/.git" ]; then
-        echo "-- Cloning $dir..."
-        rm -rf "$dir" 
-        git clone "$url" --depth=1 "$dir" &> /dev/null || { echo "Fatal: Failed to clone $dir!"; exit 1; }
-    else
-        echo "-- Using local $dir"
-    fi
-done
 
 # Device Default Exports
 export KBUILD_BUILD_USER=riarumoda-compile
@@ -118,11 +108,10 @@ export MAKE_ARGS=(
 
 # sweet-miui specific settings
 if [ "$DEVICE_IMPORT" == "sweet-miui" ]; then
-    export MAKE_ARGS=(
-        ARCH=arm64 LLVM=1 LLVM_IAS=1 CC=clang LD=ld.lld AR=llvm-ar AS=llvm-as
-        NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip
-        CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-gnueabi-
-        CLANG_TRIPLE=aarch64-linux-gnu-
+    TC_URLS=(
+        "clang|https://gitlab.com/fiqri19102002/proton_clang-mirror.git"
+        "gcc64|https://github.com/arter97/arm64-gcc.git"
+        "gcc32|https://github.com/arter97/arm32-gcc.git"
     )
 fi
 
@@ -155,3 +144,15 @@ if [ "$DEVICE_IMPORT" == "a9y18qlte" ]; then
         HOSTCFLAGS="$HOSTCFLAGS" HOSTLDFLAGS="$HOSTLDFLAGS" OPENSSL="$MY_OPENSSL_DIR/bin/openssl"
     )
 fi
+
+# Clang and GCC cloning
+for tc in "${TC_URLS[@]}"; do
+    dir="${tc%%|*}"; url="${tc##*|}"
+    if [ ! -d "$dir/.git" ]; then
+        echo "-- Cloning $dir..."
+        rm -rf "$dir" 
+        git clone "$url" --depth=1 "$dir" &> /dev/null || { echo "Fatal: Failed to clone $dir!"; exit 1; }
+    else
+        echo "-- Using local $dir"
+    fi
+done

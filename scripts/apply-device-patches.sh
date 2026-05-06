@@ -78,21 +78,6 @@ case "$DEVICE_IMPORT" in
             echo "CONFIG_LTO_CLANG=y" >> $MAIN_DEFCONFIG
             echo "CONFIG_THINLTO=y" >> $MAIN_DEFCONFIG
         fi
-        # Specific Patches for sweet-miui
-        if [[ "$DEVICE_IMPORT" == "sweet-miui" ]]; then
-            echo "-- Applying sweet-miui specific patches..."
-            sed -i 's/^CONFIG_CC_STACKPROTECTOR_STRONG=y/# CONFIG_CC_STACKPROTECTOR_STRONG is not set/' $MAIN_DEFCONFIG
-            sed -i 's/^# CONFIG_CC_STACKPROTECTOR_NONE is not set/CONFIG_CC_STACKPROTECTOR_NONE=y/' $MAIN_DEFCONFIG
-            revert_commit "https://github.com/fiqri19102002/android_kernel_xiaomi_sweet/commit/ab1f8ed4fd75ea551fac3eeb36f7f321035477d9.patch"
-            revert_commit "https://github.com/fiqri19102002/android_kernel_xiaomi_sweet/commit/83de19cd282222cc0626079fae1d414c70dd3f25.patch"
-            revert_commit "https://github.com/fiqri19102002/android_kernel_xiaomi_sweet/commit/330719166e1d92e985d732db5836371698380712.patch"
-            revert_commit "https://github.com/fiqri19102002/android_kernel_xiaomi_sweet/commit/2e3ca73e010130ac1b43defa193f4a7eb7b00241.patch"
-            revert_commit "https://github.com/fiqri19102002/android_kernel_xiaomi_sweet/commit/a719f7f6623b340c7cb90a77bf472b8403f61bd9.patch"
-            revert_commit "https://github.com/fiqri19102002/android_kernel_xiaomi_sweet/commit/e14ae6e0f010b9f9d7ff1fc9cb7367ad345727bd.patch"
-            revert_commit "https://github.com/fiqri19102002/android_kernel_xiaomi_sweet/commit/0bcbdb62e82deb70ec0c6dcc193ec6f6216ab2ce.patch"
-            revert_commit "https://github.com/fiqri19102002/android_kernel_xiaomi_sweet/commit/4cd881c660375e6efa71db875146dd396644ac6c.patch"
-            revert_commit "https://github.com/fiqri19102002/android_kernel_xiaomi_sweet/commit/3a5f847abac13b1c92489c6da981b853c3ed31e9.patch"
-        fi
         # Shared patches for 4.14
         echo "-- Applying shared patches (KPATCH)..."
         apply_patches "$KPATCH_PATCH"
