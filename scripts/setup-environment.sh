@@ -114,11 +114,9 @@ if [ "$DEVICE_IMPORT" == "sweet-miui" ]; then
         "gcc32|https://github.com/arter97/arm32-gcc.git"
     )
     export MAKE_ARGS=(
-        ARCH=arm64 LLVM=1 LLVM_IAS=1 CC=clang LD=ld.lld AR=llvm-ar AS=llvm-as
-        NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip
         CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
     )
-    export PATH="$CLANG_ROOT/bin:/usr/bin:$PATH"
+    export PATH="$GCC64_ROOT/bin:$GCC32_ROOT/bin:/usr/bin:$PATH"
 fi
 
 # a9y18qlte specific settings
