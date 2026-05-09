@@ -78,6 +78,7 @@ case "$DEVICE_IMPORT" in
         export COMMON_DEFCONFIG="vendor/debugfs.config"
         export DEVICE_DEFCONFIG=""
         export KERNEL_NAME="-old-spiteful-neon"
+        export CLANG_GCC_FALLBACK_DOWNLOADER=true
         ;;
     # OneUI
     a9y18qlte)
@@ -137,13 +138,45 @@ if [ "$DEVICE_IMPORT" == "a9y18qlte" ]; then
 fi
 
 # Clang and GCC cloning
-for tc in "${TC_URLS[@]}"; do
-    dir="${tc%%|*}"; url="${tc##*|}"
-    if [ ! -d "$dir/.git" ]; then
-        echo "-- Cloning $dir..."
-        rm -rf "$dir" 
-        git clone "$url" --depth=1 "$dir" &> /dev/null || { echo "Fatal: Failed to clone $dir!"; exit 1; }
+if [[ "$CLANG_GCC_FALLBACK_DOWNLOADER" == "true" ]]; then
+    echo "-- Setting up toolchains..."
+    # Setup Clang
+    if [ ! -d "$PWD/clang" ]; then
+        echo "-- Cloning Clang..."
+        git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379.git --depth=1 -b 15.0 clang
     else
-        echo "-- Using local $dir"
+        echo "-- Using local clang"
     fi
-done
+
+    # Setup GCC
+    if [ ! -d "$PWD/gcc32" ] && [ ! -d "$PWD/gcc64" ]; then
+        echo "-- Downloading GCC..."
+        ASSET_URLS=$(curl -s "https://api.github.com/repos/mvaisakh/gcc-build/releases/latest" | grep "browser_download_url" | cut -d '"' -f 4 | grep -E "eva-gcc-arm.*\.xz")
+        for url in $ASSET_URLS; do
+            wget --content-disposition -L "$url"
+        done
+
+        for file in eva-gcc-arm*.xz; do
+        # The files are actually just plain tarballs named as .xz
+        if [[ "$file" == *arm64* ]]; then
+            tar -xf "$file" && mv gcc-arm64 gcc64
+        else
+            tar -xf "$file" && mv gcc-arm gcc32
+        fi
+        rm -rf "$file"
+        done
+    else
+        echo "-- Using local gcc"
+    fi
+else
+    for tc in "${TC_URLS[@]}"; do
+        dir="${tc%%|*}"; url="${tc##*|}"
+        if [ ! -d "$dir/.git" ]; then
+            echo "-- Cloning $dir..."
+            rm -rf "$dir" 
+            git clone "$url" --depth=1 "$dir" &> /dev/null || { echo "Fatal: Failed to clone $dir!"; exit 1; }
+        else
+            echo "-- Using local $dir"
+        fi
+    done
+fi
