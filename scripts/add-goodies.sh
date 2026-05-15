@@ -114,6 +114,8 @@ case "$BBG_SELECTOR" in
         echo "CONFIG_BBG=y" >> $MAIN_DEFCONFIG
         # Check if kernel have DEFINE_LSM
         DEFINE_LSM_CHECK=$(grep -q "#define DEFINE_LSM(lsm)" "${PWD}/include/linux/lsm_hooks.h" && echo "true")
+        # Check if kernel have task_security_struct
+        TASK_SECURITY_STRUCT_CHECK=$(grep -q "struct[[:space:]]\+task_security_struct[[:space:]]\+\*selinux_cred" "${PWD}/security/selinux/include/objsec.h" && echo "true")
         # Kernel Settings for Baseband Guard
         if [[ "$DEFINE_LSM_CHECK" == "true" ]]; then
             LSM_FALLBACK='CONFIG_LSM="lockdown,yama,loadpin,safesetid,integrity,selinux,smack,tomoyo,apparmor,bpf,baseband_guard"'
@@ -124,6 +126,11 @@ case "$BBG_SELECTOR" in
                 echo "$LSM_FALLBACK" >> "$MAIN_DEFCONFIG"
                 echo "-- Added default CONFIG_LSM with baseband_guard."
             fi
+        fi
+        # Remove duplicate on bbg if exist
+        if [[ "$TASK_SECURITY_STRUCT_CHECK" == "true" ]]; then
+            echo "-- Removing duplicate task_security_struct definition..."
+            sed -i '/static inline struct task_security_struct \*selinux_cred/,/[[:space:]]*}/d' security/baseband-guard/tracing/tracing.c
         fi
         ;;
     none|"")
