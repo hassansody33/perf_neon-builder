@@ -23,14 +23,38 @@ jobs:
           - build-type: a9y18qlte
             ksu-type: zako-susfs
             bbg-type: bbg
+          - build-type: a9y18qlte
+            ksu-type: zako-susfs
+            bbg-type: none
+          - build-type: a9y18qlte
+            ksu-type: zako
+            bbg-type: bbg
           - build-type: sweet-pixelos
             ksu-type: zako
+            bbg-type: none
+          - build-type: sweet-pixelos
+            ksu-type: zako
+            bbg-type: bbg
+          - build-type: sweet-pixelos
+            ksu-type: zako-susfs
             bbg-type: none
           - build-type: sweet-miui
             ksu-type: zako
             bbg-type: none
+          - build-type: sweet-miui
+            ksu-type: zako
+            bbg-type: bbg
+          - build-type: sweet-miui
+            ksu-type: zako-susfs
+            bbg-type: none
           - build-type: mi89x7-community
             ksu-type: zako
+            bbg-type: none
+          - build-type: mi89x7-community
+            ksu-type: zako
+            bbg-type: bbg
+          - build-type: mi89x7-community
+            ksu-type: zako-susfs
             bbg-type: none
 
     steps:
