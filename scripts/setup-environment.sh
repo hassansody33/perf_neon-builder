@@ -167,7 +167,11 @@ for tc in "${TC_URLS_REAL[@]}"; do
             fi
             if wget -q --spider "$asset_url"; then
                 mkdir -p "$dir"
-                wget -qO- "$asset_url" | tar -xf - -C "$dir"
+                if [[ "$ext" == "tar.gz" ]]; then
+                    wget -qO- "$asset_url" | tar -xzf - -C "$dir"
+                else
+                    wget -qO- "$asset_url" | tar -xJf - -C "$dir"
+                fi
             else
                 echo "-- Fatal: Link is dead or unreachable: $asset_url"
                 exit 1
