@@ -7,6 +7,9 @@ export GCC64_ROOT="$PWD/gcc64"
 export GCC32_ROOT="$PWD/gcc32"
 export PATH="$CLANG_ROOT/bin:$GCC64_ROOT/bin:$GCC32_ROOT/bin:/usr/bin:$PATH"
 TC_URLS_MAIN=(
+    "clang|https://api.github.com/repos/bachnxuan/aosp_clang_mirror/releases/latest"
+)
+TC_URLS_LEGACY=(
     "clang|https://github.com/LineageOS/android_prebuilts_clang_kernel_linux-x86_clang-r416183b.git"
     "gcc64|https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git"
     "gcc32|https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git"
@@ -26,7 +29,7 @@ export MAIN_DEFCONFIG="arch/arm64/configs/vendor/sdmsteppe-perf_defconfig"
 export ACTUAL_MAIN_DEFCONFIG="vendor/sdmsteppe-perf_defconfig"
 export COMMON_DEFCONFIG="vendor/debugfs.config"
 export FEATURE_DEFCONFIG=""
-export TC_ALT_MODE=false
+export TC_ALT_MODE=0
 
 # Device Settings - v3.5
 case "$DEVICE_IMPORT" in
@@ -79,7 +82,7 @@ case "$DEVICE_IMPORT" in
             export KERNEL_NAME="-VantomKernel-neon"
         elif [ "$DEVICE_IMPORT" = "sweet-miui" ]; then
             export KERNEL_NAME="-Spiteful-old-neon"
-            export TC_ALT_MODE=true
+            export TC_ALT_MODE=2
         fi
         ;;
     # OneUI
@@ -90,6 +93,7 @@ case "$DEVICE_IMPORT" in
         export DEVICE_DEFCONFIG=""
         export FEATURE_DEFCONFIG=""
         export KERNEL_VERSION="4.4"
+        export TC_ALT_MODE=1
         ;;
     *)
         echo "- Invalid DEVICE_IMPORT. Valid options: sweet, davinci, ginkgo, laurel_sprout, mi89x7, mi89x7-community, a52s, sweet-pixelos, sweet-miui, a9y18qlte. Yours: $DEVICE_IMPORT."
@@ -101,49 +105,33 @@ esac
 export GIT_NAME="$KBUILD_BUILD_USER"
 export GIT_EMAIL="$KBUILD_BUILD_USER@$KBUILD_BUILD_HOST"
 
-# Global Make Arguments
-export MAKE_ARGS=(
-    ARCH=arm64 LLVM=1 LLVM_IAS=1 CC=clang LD=ld.lld AR=llvm-ar AS=llvm-as
-    NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip
-    CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
-    CLANG_TRIPLE=aarch64-linux-gnu-
-)
-
-# a9y18qlte specific settings
-if [ "$DEVICE_IMPORT" == "a9y18qlte" ]; then
-    echo "-- Setting up OpenSSL 1.1..."
-    export OPENSSL_DIR="$HOME/.openssl1.1"
-  
-    if [ ! -d "$OPENSSL_DIR" ]; then
-        wget https://www.openssl.org/source/openssl-1.1.1w.tar.gz &> /dev/null || { echo "-- Fatal: Failed to download OpenSSL!"; exit 1; }
-        tar -xf openssl-1.1.1w.tar.gz
-        cd openssl-1.1.1w
-        ./config --prefix="$OPENSSL_DIR" --openssldir="$OPENSSL_DIR" &> /dev/null
-        make -s -j$(nproc) &> /dev/null
-        make -s install &> /dev/null
-        cd ..
-        rm -rf openssl-1.1.1w*
-    fi
-
-    export HOSTCFLAGS="-I$OPENSSL_DIR/include"
-    export HOSTLDFLAGS="-L$OPENSSL_DIR/lib -Wl,-rpath,$OPENSSL_DIR/lib"
-    export LD_LIBRARY_PATH="$OPENSSL_DIR/lib:$LD_LIBRARY_PATH"
-    export MY_OPENSSL_DIR="$OPENSSL_DIR"
-
-    export MAKE_ARGS=(
-        ARCH=arm64 CC=aarch64-linux-android-gcc LD=aarch64-linux-android-ld.bfd
-        AR=aarch64-linux-android-ar AS=aarch64-linux-android-as NM=aarch64-linux-android-nm
-        OBJCOPY=aarch64-linux-android-objcopy OBJDUMP=aarch64-linux-android-objdump
-        STRIP=aarch64-linux-android-strip CROSS_COMPILE=aarch64-linux-android- 
-        HOSTCFLAGS="$HOSTCFLAGS" HOSTLDFLAGS="$HOSTLDFLAGS" OPENSSL="$MY_OPENSSL_DIR/bin/openssl"
-    )
-fi
-
 # Clang and GCC late Settings
-if [[ "$TC_ALT_MODE" == "false" ]]; then
+if [[ "$TC_ALT_MODE" == "0" ]]; then
     export TC_URLS_REAL=("${TC_URLS_MAIN[@]}")
-elif [[ "$TC_ALT_MODE" == "true" ]]; then
+    # Global Make Arguments
+    export MAKE_ARGS=(
+        ARCH=arm64 LLVM=1 LLVM_IAS=1 CC=clang LD=ld.lld AR=llvm-ar AS=llvm-as
+        NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip
+        CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
+    )
+elif [[ "$TC_ALT_MODE" == "1" ]]; then
+    export TC_URLS_REAL=("${TC_URLS_LEGACY[@]}")
+    # Global Make Arguments
+    export MAKE_ARGS=(
+        ARCH=arm64 LLVM=1 LLVM_IAS=1 CC=clang LD=ld.lld AR=llvm-ar AS=llvm-as
+        NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip
+        CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
+        CLANG_TRIPLE=aarch64-linux-gnu-
+    )
+elif [[ "$TC_ALT_MODE" == "2" ]]; then
     export TC_URLS_REAL=("${TC_URLS_ALT[@]}")
+    # Global Make Arguments
+    export MAKE_ARGS=(
+        ARCH=arm64 LLVM=1 LLVM_IAS=1 CC=clang LD=ld.lld AR=llvm-ar AS=llvm-as
+        NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip
+        CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_COMPAT=arm-linux-gnueabi-
+        CLANG_TRIPLE=aarch64-linux-gnu-
+    )
 fi
 
 # Clang and GCC Setup
@@ -182,3 +170,33 @@ for tc in "${TC_URLS_REAL[@]}"; do
         fi
     fi
 done
+
+# a9y18qlte specific settings
+if [ "$DEVICE_IMPORT" == "a9y18qlte" ]; then
+    echo "-- Setting up OpenSSL 1.1..."
+    export OPENSSL_DIR="$HOME/.openssl1.1"
+  
+    if [ ! -d "$OPENSSL_DIR" ]; then
+        wget https://www.openssl.org/source/openssl-1.1.1w.tar.gz &> /dev/null || { echo "-- Fatal: Failed to download OpenSSL!"; exit 1; }
+        tar -xf openssl-1.1.1w.tar.gz
+        cd openssl-1.1.1w
+        ./config --prefix="$OPENSSL_DIR" --openssldir="$OPENSSL_DIR" &> /dev/null
+        make -s -j$(nproc) &> /dev/null
+        make -s install &> /dev/null
+        cd ..
+        rm -rf openssl-1.1.1w*
+    fi
+
+    export HOSTCFLAGS="-I$OPENSSL_DIR/include"
+    export HOSTLDFLAGS="-L$OPENSSL_DIR/lib -Wl,-rpath,$OPENSSL_DIR/lib"
+    export LD_LIBRARY_PATH="$OPENSSL_DIR/lib:$LD_LIBRARY_PATH"
+    export MY_OPENSSL_DIR="$OPENSSL_DIR"
+
+    export MAKE_ARGS=(
+        ARCH=arm64 CC=aarch64-linux-android-gcc LD=aarch64-linux-android-ld.bfd
+        AR=aarch64-linux-android-ar AS=aarch64-linux-android-as NM=aarch64-linux-android-nm
+        OBJCOPY=aarch64-linux-android-objcopy OBJDUMP=aarch64-linux-android-objdump
+        STRIP=aarch64-linux-android-strip CROSS_COMPILE=aarch64-linux-android- 
+        HOSTCFLAGS="$HOSTCFLAGS" HOSTLDFLAGS="$HOSTLDFLAGS" OPENSSL="$MY_OPENSSL_DIR/bin/openssl"
+    )
+fi
