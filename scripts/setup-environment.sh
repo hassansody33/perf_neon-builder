@@ -41,11 +41,15 @@ case "$DEVICE_IMPORT" in
             export KERNEL_NAME="-perf-droidspaces-neon"
         fi
         ;;
-    ginkgo|laurel_sprout)
+    ginkgo|laurel_sprout|ginkgo-droidspaces)
         export MAIN_DEFCONFIG="arch/arm64/configs/vendor/trinket-perf_defconfig"
         export ACTUAL_MAIN_DEFCONFIG="vendor/trinket-perf_defconfig"
         export COMMON_DEFCONFIG="vendor/debugfs.config vendor/xiaomi-trinket.config"
         export DEVICE_DEFCONFIG="vendor/${DEVICE_IMPORT}.config"
+        if [ "$DEVICE_IMPORT" = "ginkgo-droidspaces" ]; then
+            export DEVICE_DEFCONFIG="vendor/ginkgo.config"
+            export KERNEL_NAME="-perf-droidspaces-neon"
+        fi
         export KBUILD_BUILD_USER=hiyorun-compile
         ;;
     alioth|lmi|munch)

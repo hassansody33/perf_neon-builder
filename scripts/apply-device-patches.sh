@@ -43,7 +43,7 @@ KPATCH_PATCH="https://github.com/TheSillyOk/kernel_ls_patches/raw/refs/heads/mas
 
 # Patcher - 1.0
 case "$DEVICE_IMPORT" in
-    sweet|davinci|tucana|violet|ginkgo|laurel_sprout|sweet-pixelos|sweet-miui|sweet-droidspaces)
+    sweet|davinci|tucana|violet|ginkgo|laurel_sprout|sweet-pixelos|sweet-miui|sweet-droidspaces|ginkgo-droidspaces)
         # Device specific for 4.14
         if [[ "$DEVICE_IMPORT" == "sweet" ]] || [[ "$DEVICE_IMPORT" == "sweet-pixelos" ]] || [[ "$DEVICE_IMPORT" == "sweet-droidspaces" ]]; then
             echo "-- Applying LN8K patches..."
@@ -65,7 +65,7 @@ case "$DEVICE_IMPORT" in
             fi
             apply_patches "${LN8K_PATCHES[@]}"
             echo "CONFIG_CHARGER_LN8000=y" >> $MAIN_DEFCONFIG
-        elif [[ "$DEVICE_IMPORT" == "ginkgo" ]] || [[ "$DEVICE_IMPORT" == "laurel_sprout" ]]; then
+        elif [[ "$DEVICE_IMPORT" == "ginkgo" ]] || [[ "$DEVICE_IMPORT" == "laurel_sprout" ]] || [[ "$DEVICE_IMPORT" == "ginkgo-droidspaces" ]]; then
             echo "-- Applying DTC patches..."
             apply_patches \
                 "https://github.com/LineageOS/android_kernel_xiaomi_sm6150/commit/e207247aa4553fff7190dde5dabb50aec400b513.patch" \
@@ -114,7 +114,7 @@ case "$DEVICE_IMPORT" in
             echo "-- Applying shared patches (DTBO)..."
             apply_patches "${DTBO_PATCHES[@]}"
         fi
-        if [[ "$DEVICE_IMPORT" == "mi89x7-community" ]]; then
+        if [[ "$DEVICE_IMPORT" == "mi89x7-community" ]] || [[ "$DEVICE_IMPORT" == "mi89x7-droidspaces" ]]; then
             # Revert KSU commit for mi89x7-community
             echo "-- Reverting KSU commit for mi89x7-community..."
             revert_commit "https://github.com/Mi-Thorium/kernel_msm-4.19/commit/624875e8edc36ae280b1f8efc1d3c48a28da64ea.patch"
