@@ -102,7 +102,7 @@ case "$DEVICE_IMPORT" in
         export KERNEL_VERSION="4.4"
         ;;
     *)
-        echo "- Invalid DEVICE_IMPORT. Valid options: sweet, davinci, ginkgo, laurel_sprout, mi89x7, mi89x7-community, a52s, sweet-pixelos, sweet-miui, a9y18qlte. Yours: $DEVICE_IMPORT."
+        echo "- Invalid DEVICE_IMPORT. Valid options: sweet, davinci, ginkgo, laurel_sprout, mi89x7, mi89x7-community, mi89x7-droidspaces, a52s, a9y18qlte, sweet-pixelos, sweet-miui, sweet-droidspaces. Yours: $DEVICE_IMPORT."
         exit 1
         ;;
 esac
