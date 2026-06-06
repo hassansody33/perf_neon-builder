@@ -5,10 +5,12 @@
         This project is not affiliated with LineageOS.
         </em>
     </strong>
+</div>
 
 <br>
 
-[![Release](https://img.shields.io/github/v/release/riarumoda/perf_neon-builder?label=Release&logo=github)](https://github.com/riarumoda/perf_neon-builder/releases)
+<div align="center">
+
 [![Downloads](https://img.shields.io/github/downloads/riarumoda/perf_neon-builder/total?label=Downloads&logo=icloud&logoColor=white)](https://github.com/riarumoda/perf_neon-builder/releases)
 [![Telegram](https://img.shields.io/badge/Follow-Telegram-blue?logo=telegram)](https://t.me/trrflexgroup)
 
