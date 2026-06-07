@@ -21,6 +21,7 @@ jobs:
         bbg-type: [bbg]
         nomount-type: [nomount]
         droidspaces-type: [none]
+        rekernel-type: [rekernel]
 
     steps:
       - uses: actions/checkout@v6
@@ -93,11 +94,11 @@ jobs:
           echo "Starting to compile..."
           if [[ "${{ matrix.build-type }}" == "mi89x7-playground" ]]; then
             cd android_kernel_xiaomi_msm8937/
-            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }}
+            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }} ${{ matrix.rekernel-type }}
             cd ..
           elif [[ "${{ matrix.build-type }}" == "sweet-playground" ]]; then
             cd android_kernel_xiaomi_sm6150/
-            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }}
+            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }} ${{ matrix.rekernel-type }}
             cd ..
           else
             echo "Invalid build type: ${{ matrix.build-type }}"
@@ -147,8 +148,7 @@ jobs:
           elif [[ "${{ matrix.build-type }}" == "mi89x7-playground" ]]; then
             export KERNELNAME="Mi8937v2"
           else
-            echo "Invalid build type: ${{ matrix.build-type }}"
-            exit 1
+            export KERNELNAME="perf-neon"
           fi
           export ZIPNAME="$KERNELNAME-${{ matrix.build-type }}-$KSUTYPE-${{ steps.ts.outputs.DATE }}.zip"
           cd AnyKernel3

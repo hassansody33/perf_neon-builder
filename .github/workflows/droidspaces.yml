@@ -21,6 +21,7 @@ jobs:
         bbg-type: [bbg]
         nomount-type: [nomount]
         droidspaces-type: [droidspaces]
+        rekernel-type: [rekernel]
 
     steps:
       - uses: actions/checkout@v6
@@ -113,19 +114,19 @@ jobs:
           echo "Starting to compile..."
           if [[ "${{ matrix.build-type }}" == "sweet-droidspaces" ]]; then
             cd android_kernel_xiaomi_sm6150/
-            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }}
+            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }} ${{ matrix.rekernel-type }}
             cd ..
           elif [[ "${{ matrix.build-type }}" == "ginkgo-droidspaces" ]]; then
             cd android_kernel_xiaomi_sm6125/
-            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }}
+            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }} ${{ matrix.rekernel-type }}
             cd ..
           elif [[ "${{ matrix.build-type }}" == "alioth-droidspaces" ]]; then
             cd android_kernel_xiaomi_sm8250/
-            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }}
+            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }} ${{ matrix.rekernel-type }}
             cd ..
           elif [[ "${{ matrix.build-type }}" == "mi89x7-droidspaces" ]]; then
             cd android_kernel_xiaomi_msm8937/
-            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }}
+            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }} ${{ matrix.rekernel-type }}
             cd ..
           else
             echo "Invalid build type: ${{ matrix.build-type }}"
