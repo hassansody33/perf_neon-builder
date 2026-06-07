@@ -228,8 +228,6 @@ jobs:
             fi
           elif [[ "${{ matrix.build-type }}" == "umi" || "${{ matrix.build-type }}" == "lmi" || "${{ matrix.build-type }}" == "munch" ]]; then
             cp android_kernel_xiaomi_sm8250/out/arch/arm64/boot/Image AnyKernel3/
-            cp android_kernel_xiaomi_sm8250/out/arch/arm64/boot/dtb.img AnyKernel3/
-            cp android_kernel_xiaomi_sm8250/out/arch/arm64/boot/dtbo.img AnyKernel3/
             sed -i 's/supported.versions=11-16/supported.versions=11-16/' AnyKernel3/anykernel.sh
             if [[ "${{ matrix.build-type }}" == "umi" ]]; then
               sed -i 's/device.name1=sweet/device.name1=umi/' AnyKernel3/anykernel.sh
