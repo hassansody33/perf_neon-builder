@@ -99,6 +99,7 @@ case "$DEVICE_IMPORT" in
         echo "-- Reverting KSU commit for a9y18qlte..."
         revert_commit "https://github.com/riarumoda/kernel_samsung_a9y18qlte/commit/6e44d53debc1395d80589eed7657b77f52522c27.patch"
         revert_commit "https://github.com/riarumoda/kernel_samsung_a9y18qlte/commit/ab4abe439587577c1f4cf594fb5179bdb6bd59a6.patch"
+        echo "CONFIG_KALLSYMS_ALL=y" >> $MAIN_DEFCONFIG
         ;;
     *)
         echo "No specific patches to apply for $DEVICE_IMPORT."
