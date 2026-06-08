@@ -78,6 +78,7 @@ case "$DEVICE_IMPORT" in
         echo "-- Tuning default configs..."
         echo "CONFIG_EROFS_FS=y" >> $MAIN_DEFCONFIG
         echo "CONFIG_SECURITY_SELINUX_DEVELOP=y" >> $MAIN_DEFCONFIG
+        echo "CONFIG_KALLSYMS_ALL=y" >> $MAIN_DEFCONFIG
         ;;
     umi|mi89x7-playground)
         # Device specific for 4.19
@@ -92,6 +93,7 @@ case "$DEVICE_IMPORT" in
         echo "CONFIG_LTO_CLANG=y" >> $MAIN_DEFCONFIG
         echo "CONFIG_THINLTO=y" >> $MAIN_DEFCONFIG
         echo "CONFIG_SHADOW_CALL_STACK=y" >> $MAIN_DEFCONFIG
+        echo "CONFIG_KALLSYMS_ALL=y" >> $MAIN_DEFCONFIG
         ;;
     a9y18qlte)
         echo "-- Reverting KSU commit for a9y18qlte..."
