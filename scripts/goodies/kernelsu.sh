@@ -32,7 +32,7 @@ case "$KERNELSU_SELECTOR" in
 
         # Apply KSU Hooks
         echo "-- Applying KernelSU hooks..."
-        curl -LSs "$KSU_HOOK" | bash &> /dev/null
+        curl -LSs --fail --retry 3 "$KSU_HOOK" | bash &> /dev/null || { echo "Fatal: KSU hook script failed to download/run!"; exit 1; }
 
         # SUSFS Logic
         if [[ "$KERNELSU_SELECTOR" == "zako-susfs" ]]; then
