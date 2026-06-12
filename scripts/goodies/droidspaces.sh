@@ -29,8 +29,15 @@ case "$DROIDSPACES_SELECTOR" in
             # Check if kernel version is 4.14
             if [[ "$KERNEL_VERSION" == "4.14" ]]; then
                 echo "-- Droidspaces: Kernel is 4.14, changing id..."
-                sed -i 's/css->cgroup->id/cgroup_id(css->cgroup)/g' include/net/netprio_cgroup.h
-                sed -i 's/css->cgroup->id/cgroup_id(css->cgroup)/g' net/core/netprio_cgroup.c
+                if grep -q "union kernfs_node_id" include/linux/kernfs.h; then
+                    echo "-- Droidspaces: Detected union kernfs_node_id, using .id.id..."
+                    sed -i 's/css->cgroup->id/css->cgroup->kn->id.id/g' include/net/netprio_cgroup.h
+                    sed -i 's/css->cgroup->id/css->cgroup->kn->id.id/g' net/core/netprio_cgroup.c
+                else
+                    echo "-- Droidspaces: Detected scalar kernfs_node id, using ->id..."
+                    sed -i 's/css->cgroup->id/css->cgroup->kn->id/g' include/net/netprio_cgroup.h
+                    sed -i 's/css->cgroup->id/css->cgroup->kn->id/g' net/core/netprio_cgroup.c
+                fi
             fi
             # Apply cgroup patch
             echo "-- Droidspaces: Applying cgroup patch..."
