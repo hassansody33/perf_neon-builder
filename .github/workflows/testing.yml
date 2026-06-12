@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         build-type: [sweet, ginkgo, a52q, a72q]
-        ksu-type: [zako-susfs]
+        ksu-type: [zako]
         bbg-type: [bbg]
         nomount-type: [nomount]
         droidspaces-type: [droidspaces]
