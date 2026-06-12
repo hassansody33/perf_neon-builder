@@ -14,7 +14,7 @@ export FEATURE_DEFCONFIG=""
 
 # Device Settings - v3.7
 case "$DEVICE_IMPORT" in
-    # LineageOS
+    # LineageOS - Xiaomi
     sweet|davinci|tucana|violet)
         export DEVICE_DEFCONFIG="vendor/${DEVICE_IMPORT}.config"
         ;;
@@ -31,6 +31,13 @@ case "$DEVICE_IMPORT" in
         export DEVICE_DEFCONFIG="vendor/xiaomi/sm8250-common.config vendor/xiaomi/${DEVICE_IMPORT}.config"
         export KERNEL_VERSION="4.19"
         export KBUILD_BUILD_USER=kamilek-compile
+        ;;
+    # LineageOS - Samsung
+    a52q|a72q)
+        export MAIN_DEFCONFIG="arch/arm64/configs/vendor/lineage-${DEVICE_IMPORT}_defconfig"
+        export ACTUAL_MAIN_DEFCONFIG="vendor/lineage-${DEVICE_IMPORT}_defconfig"
+        export DEVICE_DEFCONFIG=""
+        export KBUILD_BUILD_USER=isaiah-compile
         ;;
     # Mi-Thorium
     mi89x7-playground)
