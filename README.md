@@ -44,11 +44,13 @@ Currently supported device
 - Xiaomi Mi A3 ([laurel_sprout](https://download.lineageos.org/devices/laurel_sprout/builds))   
 - Xiaomi Mi 10 ([umi](https://download.lineageos.org/devices/umi/builds))   
 - Xiaomi Mi 10 Pro ([cmi](https://download.lineageos.org/devices/cmi/builds))   
-- Samsung Galaxy Tab A7 10.4 2020 ([gta4l](https://download.lineageos.org/devices/gta4l/builds))   
+- Samsung Tab A7 10.4 2020 ([gta4l](https://download.lineageos.org/devices/gta4l/builds))   
 
 Externally compiled kernels   
 - Samsung A52 4G ([a52q](https://download.lineageos.org/devices/a52q/builds)) from LineageOS   
 - Samsung A72 ([a72q](https://download.lineageos.org/devices/a72q/builds)) from LineageOS   
+- Samsung Note 10+ ([d2s](https://download.lineageos.org/devices/d2s/builds)) from LineageOS   
+- Samsung Note 10+ 5G ([d2x](https://download.lineageos.org/devices/d2x/builds)) from LineageOS   
 - Redmi Note 10 Pro/Pro Max ([sweet](https://pixelos.net/download/sweet)) from PixelOS   
 - Redmi 4A/5A/Note 5A Lite/Y1 Lite ([mi8917](https://download.lineageos.org/devices/Mi8917/builds)) from Mi-Thorium   
 - Redmi 3/3S/4/4X/Note 5A Prime/Y1 Prime ([mi8937](https://download.lineageos.org/devices/Mi8937/builds)) from Mi-Thorium   
