@@ -17,6 +17,10 @@
 
 </div>
 
+# Disclaimer
+***Your warranty is now void. I am not responsible for bricked devices, dead SD cards, or you getting fired because an alarm failed to work. Please do some research if you have any concerns about features included in this ROM before flashing it! YOU are choosing to make these modifications, and if you point the finger at me for messing up your device, I will laugh at you.***   
+<p align="right">Your typical XDA Forum Disclaimer.<p>   
+
 # Background
 The naming, Perf Neon, is inspired by a Linux Distribution called KDE Neon, where KDE take latest Ubuntu LTS as a base system and then put Latest KDE on top of it. Same thing as Perf Neon, where i take whatever the world the LineageOS team put under their kernel source and then put minimal patches on top of it.
 
@@ -54,6 +58,28 @@ Externally compiled kernels
 - Redmi Note 10 Pro/Pro Max ([sweet](https://pixelos.net/download/sweet)) from PixelOS   
 - Redmi 4A/5A/Note 5A Lite/Y1 Lite ([mi8917](https://download.lineageos.org/devices/Mi8917/builds)) from Mi-Thorium   
 - Redmi 3/3S/4/4X/Note 5A Prime/Y1 Prime ([mi8937](https://download.lineageos.org/devices/Mi8937/builds)) from Mi-Thorium   
+
+# Installation
+On Recovery   
+- Download both the flashable zip and the original boot image for your device as a backup.   
+- Flash or Sideload the flashable zip with `adb sideload <package.zip>`  
+- Allow to continue if you see Error 21 signature invalid.   
+- Reboot to system and pray everything works.   
+- Profit.   
+
+On ReSukiSU Manager
+- On ReSukiSU Manager, click the "Working" card on the ReSukiSU Manager Home Screen.
+- You'll see flash AnyKernel3, click it, and select the flashable zip.   
+- Click next and the flashable will be installed. If you see KPM option, just choose follow kernel.   
+- Reboot and pray everything works.   
+- Profit.   
+
+Restore to default kernel
+- You'll need to remove everything inside `/data/adb`. You can do this with `su -c rm -rf /data/adb/*`.
+- Then immediately reboot to bootloader/fastbootd.   
+- FLash the stock boot image with `fastboot flash boot <theoriginalbootimage.img>`
+- Reboot with `fastboot reboot` and pray everything works.   
+- Profit.   
 
 # Credits
 Patches & buildscript
