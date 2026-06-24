@@ -53,14 +53,14 @@ jobs:
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
-            rekernel-type: rekernel
+            rekernel-type: none
 
           - build-type: a52q
             ksu-type: none
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
-            rekernel-type: rekernel
+            rekernel-type: none
 
           # --- a72q Builds ---
           - build-type: a72q
@@ -68,14 +68,14 @@ jobs:
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
-            rekernel-type: rekernel
+            rekernel-type: none
 
           - build-type: a72q
             ksu-type: none
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
-            rekernel-type: rekernel
+            rekernel-type: none
 
           # --- d2s Builds ---
           - build-type: d2s
