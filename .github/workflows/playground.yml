@@ -23,12 +23,14 @@ jobs:
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           - build-type: sweet-playground
             ksu-type: none
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           # --- mi89x7-playground Builds ---
           - build-type: mi89x7-playground
@@ -36,12 +38,14 @@ jobs:
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           - build-type: mi89x7-playground
             ksu-type: none
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           # --- a52q Builds ---
           - build-type: a52q
@@ -49,12 +53,14 @@ jobs:
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           - build-type: a52q
             ksu-type: none
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           # --- a72q Builds ---
           - build-type: a72q
@@ -62,12 +68,14 @@ jobs:
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           - build-type: a72q
             ksu-type: none
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           # --- d2s Builds ---
           - build-type: d2s
@@ -75,12 +83,14 @@ jobs:
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           - build-type: d2s
             ksu-type: none
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           # --- d2x Builds ---
           - build-type: d2x
@@ -88,12 +98,14 @@ jobs:
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
           - build-type: d2x
             ksu-type: none
             bbg-type: bbg
             nomount-type: nomount
             droidspaces-type: none
+            rekernel-type: rekernel
 
     steps:
       - uses: actions/checkout@v6
@@ -186,19 +198,19 @@ jobs:
           echo "Starting to compile..."
           if [[ "${{ matrix.build-type }}" == "mi89x7-playground" ]]; then
             cd android_kernel_xiaomi_msm8937/
-            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }}
+            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }} ${{ matrix.rekernel-type }}
             cd ..
           elif [[ "${{ matrix.build-type }}" == "sweet-playground" ]]; then
             cd android_kernel_xiaomi_sm6150/
-            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }}
+            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }} ${{ matrix.rekernel-type }}
             cd ..
           elif [[ "${{ matrix.build-type }}" == "a52q" || "${{ matrix.build-type }}" == "a72q" ]]; then
             cd android_kernel_samsung_sm7125/
-            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }}
+            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }} ${{ matrix.rekernel-type }}
             cd ..
           elif [[ "${{ matrix.build-type }}" == "d2s" || "${{ matrix.build-type }}" == "d2x" ]]; then
             cd android_kernel_samsung_exynos9820/
-            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }}
+            ./build.sh ${{ matrix.build-type }} ${{ matrix.ksu-type }} ${{ matrix.bbg-type }} ${{ matrix.nomount-type }} ${{ matrix.droidspaces-type }} ${{ matrix.rekernel-type }}
             cd ..
           else
             echo "Invalid build type: ${{ matrix.build-type }}"
