@@ -49,7 +49,7 @@ case "$DEVICE_IMPORT" in
             apply_patches "${LN8K_PATCHES[@]}"
             echo "CONFIG_CHARGER_LN8000=y" >> $MAIN_DEFCONFIG
         fi
-        if [[ "$DEVICE_IMPORT" == "ginkgo" ]] || [[ "$DEVICE_IMPORT" == "laurel_sprout" ]]; then
+        if [[ "$DEVICE_IMPORT" == "ginkgo" ]] || [[ "$DEVICE_IMPORT" == "laurel_sprout" ]] || [[ "$DEVICE_IMPORT" == "miatoll" ]]; then
             echo "-- Applying DTC patches..."
             apply_patches \
                 "https://github.com/LineageOS/android_kernel_xiaomi_sm6150/commit/e207247aa4553fff7190dde5dabb50aec400b513.patch" \
