@@ -82,8 +82,8 @@ case "$DEVICE_IMPORT" in
             revert_commit "https://github.com/Mi-Thorium/kernel_msm-4.19/commit/624875e8edc36ae280b1f8efc1d3c48a28da64ea.patch"
         fi
         if [[ "$DEVICE_IMPORT" == "gta4l" ]]; then
-            #echo "-- Disabling a dtb..."
-            #sed -i '/P85946-qrd-overlay\.dtbo/s/^/# /' arch/arm64/boot/dts/vendor/qcom/Makefile
+            echo "-- Fixing scripts/dtc/livetree.c..."
+            sed -i '/assert(generate_fixups);/d' scripts/dtc/livetree.c
             echo "-- Setting up drivers as built-in..."
             sed -i 's/^CONFIG_QCA_CLD_WLAN=m$/CONFIG_QCA_CLD_WLAN=y/' arch/arm64/configs/$DEVICE_DEFCONFIG
         fi
