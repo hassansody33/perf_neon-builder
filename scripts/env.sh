@@ -80,7 +80,7 @@ case "$DEVICE_IMPORT" in
         ;;
     # MIUI
     sweet-miui)
-        export DEVICE_DEFCONFIG="vendor/${DEVICE_IMPORT}.config"
+        export DEVICE_DEFCONFIG="vendor/sweet.config"
         export KERNEL_NAME="-miui-neon"
         ;;
     # OneUI
