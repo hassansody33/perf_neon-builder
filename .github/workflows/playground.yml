@@ -40,7 +40,7 @@ jobs:
             droidspaces-type: none
             rekernel-type: rekernel
 
-          - build-type: sweet-playground
+          - build-type: sweet-miui
             ksu-type: none
             bbg-type: bbg
             nomount-type: nomount
