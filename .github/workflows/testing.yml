@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         build-type: [gta4l]
-        ksu-type: [zako-susfs, none]
+        ksu-type: [zako-susfs]
         bbg-type: [bbg]
         nomount-type: [nomount]
         droidspaces-type: [droidspaces]
